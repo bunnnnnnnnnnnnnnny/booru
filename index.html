@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <!-- <link rel="prefetch" href="http://192.168.1.69:3000/posts/count" as="fetch" />
+    <link rel="prefetch" href="http://localhost:3000/posts/count" as="fetch" /> -->
+    <link rel="prefetch" href="http://bunnny.org:3000/posts/count" as="fetch" />
+    <script>
+      async function run() {
+        try {
+          const response = await fetch('http://bunnny.org:3000/posts/count');
+          if (!response) return;
+          window.post_count = await response.json();
+        } catch {
+          try {
+            const response = await fetch('http://localhost:3000/posts/count');
+            if (!response) return;
+            window.post_count = await response.json();
+          } catch {
+            try {
+              const response = await fetch('http://192.168.1.69:3000/posts/count');
+              if (!response) return;
+              window.post_count = await response.json();
+            } catch {}
+          }
+        } finally {
+          window.post_count = window.post_count ?? 0;
+        }
+      }
+      run();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>♥ bunnny booru ♥</title>
+  </head>
+  <body>
+    <main id="app"></main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
